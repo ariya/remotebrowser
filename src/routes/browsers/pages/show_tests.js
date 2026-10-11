@@ -82,9 +82,10 @@ test('GET /browsers/:browserId/pages/:pageId renders the live view for a ready b
   assert.match(
     body,
     new RegExp(
-      `<img class="page-screenshot" src="/browsers/${launched.data.publicId}/pages/page1/view" alt="Live view of this page"`
+      `<img\\s+class="page-screenshot"\\s+src="/browsers/${launched.data.publicId}/pages/page1/view"\\s+alt="Live view of this page"\\s+hx-get="/browsers/${launched.data.publicId}/pages/page1/live"\\s+hx-trigger="load"\\s+hx-select="#page-live-view"\\s+hx-swap="outerHTML"`
     )
   );
+  assert.match(body, /<script src="\/htmx\.min\.js"><\/script>/);
 });
 
 test('GET /browsers/:browserId/pages/:pageId shows a not-ready message while the browser is still starting', async () => {

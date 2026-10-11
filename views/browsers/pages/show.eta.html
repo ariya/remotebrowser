@@ -1,9 +1,18 @@
 <% layout('/layout', { title: 'Remote Browser - ' + it.browser.browserName + ' - Page' }) %> <%~
 include('/partials/topnav', it) %> <%~ include('/partials/breadcrumbs', it) %>
+<script src="/htmx.min.js"></script>
 <main>
   <article>
     <% if (it.pageViewUrl) { %>
-    <img class="page-screenshot" src="<%= it.pageViewUrl %>" alt="Live view of this page" />
+    <img
+      class="page-screenshot"
+      src="<%= it.pageViewUrl %>"
+      alt="Live view of this page"
+      hx-get="<%= it.pageLiveUrl %>"
+      hx-trigger="load"
+      hx-select="#page-live-view"
+      hx-swap="outerHTML"
+    />
     <% } else { %>
     <p id="browser-page-starting-notice">This page's live view will appear here once the browser is ready.</p>
     <% } %>
